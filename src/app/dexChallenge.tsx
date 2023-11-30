@@ -26,6 +26,7 @@ export default function DexChallenge(data: Props) {
 	const maxSkips = 5;
 	const [skips, setSkips] = useState(maxSkips);
 
+	const [message, setMessage] = useState("");
 	const [confettiEnabled, setConfettiEnabled] = useState(true);
 	const { reward, isAnimating } = useReward('rewardId', 'confetti');
 	const [correctGuesses, setCorrectGuesses] = useState([] as Pokemon[]);
@@ -61,8 +62,11 @@ export default function DexChallenge(data: Props) {
 
 	const guessPokemon = () => {
 		const currentPokemon = getPokemon();
+		console.log("Guessing:", guess);
+		setMessage("");
 		if (guess === "") {
 			// Tell user to enter a Pokemon
+			setMessage("Please enter a valid Pokémon.");
 			return;
 		}
 		if (guess.toString().toLowerCase() === currentPokemon.toLowerCase()) {
@@ -74,7 +78,9 @@ export default function DexChallenge(data: Props) {
 			getRandomDexNumber();
 			setGuess("");
 			setScore(score + 1);
-		} else if (!filteredPokemon.map((x) => x.toLowerCase()).includes(guess)) {
+			// } else if (!filteredPokemon.map((x) => x.toLowerCase()).includes(guess)) {
+		} else if (data.Data.filter((item) => item.Pokemon.toLowerCase() === guess.toLowerCase()).length === 0) {
+			setMessage("Please enter a valid Pokémon.");
 			// Tell user that it's not a valid Pokemon
 		} else {
 			// Failure
@@ -182,12 +188,19 @@ Can you beat my score? https://dex.lmnts.tech`;
 				</div>
 				<div className="flex flex-col items-center lg:flex-row">
 					<p className="text-4xl text-center flex-1 pb-6 lg:pb-0 lg:text-left md:text-5xl">What Pokémon is Dex #{dexNumber}?</p>
-					<AutoComplete ref={inputRef} inputClassName="text-2xl md:text-3xl" size={20} value={guess} suggestions={filteredPokemon} completeMethod={searchPokemon} onChange={(e) => setGuess(e.value)} onKeyUp={(e) => { if (e.code === "Enter") { guessPokemon(); } }} dropdown />
+					<div className="">
+						<AutoComplete ref={inputRef} inputClassName="text-2xl md:text-3xl border border-blue-500" size={20} value={guess} suggestions={filteredPokemon} completeMethod={searchPokemon} onChange={(e) => setGuess(e.value)} onSelect={(e) => { setGuess(e.value); }} onKeyUp={(e) => { if (e.code === "Enter") { guessPokemon(); } }} dropdown />
+						<p className="text-md text-right md:text-lg text-red-600">{message}</p>
+					</div>
 				</div>
 				<div className="flex flex-col space-y-4">
 					<span id="rewardId" className="self-center z-20" />
-					<Button label="Guess" onClick={() => guessPokemon()} className="w-full text-3xl" />
-					<Button label="Skip" severity="danger" onClick={() => { setSkips(skips - 1); setDSkip(true); }} className="w-full text-3xl" disabled={skips === 0} />
+					<div className="flex flex-row justify-center space-x-4">
+						{/* <button onClick={guessPokemon} className="w-1/2 text-3xl border border-blue-400 bg-blue-400 text-black font-bold py-2 rounded">Guess</button> */}
+						<Button label="Guess" onClick={guessPokemon} className="w-full md:w-1/2 text-3xl border bg-blue-400 text-black py-2" />
+						{/* <button onClick={() => { setSkips(skips - 1); setDSkip(true); }} className="w-1/2 text-3xl border border-blue-400 bg-blue-400 text-black font-bold py-2 rounded" disabled={skips === 0}>Skip</button> */}
+						<Button label="Skip" severity="danger" onClick={() => { setSkips(skips - 1); setDSkip(true); }} className="w-full md:w-1/2 text-3xl border bg-blue-400 text-black py-2" disabled={skips === 0} />
+					</div>
 				</div>
 			</div>
 		</>
