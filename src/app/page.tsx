@@ -19,7 +19,7 @@ const dynamicSort = (property) => {
 	}
 }
 async function getData() {
-	const file = await fs.readFile(process.cwd() + '\\src\\app\\dexnumbers.csv', 'utf-8');
+	const file = await fs.readFile(process.cwd() + '/src/app/dexnumbers.csv', 'utf-8');
 	const data = Papa.parse(file, {
 		header: true,
 		dynamicTyping: true

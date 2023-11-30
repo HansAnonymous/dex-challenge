@@ -5,8 +5,8 @@ import './globals.css'
 import { PrimeReactProvider } from 'primereact/api'
 
 // import 'primereact/resources/themes/soho-dark/theme.css'
-import 'primereact/resources/themes/lara-dark-indigo/theme.css'
 // import 'primereact/resources/themes/viva-dark/theme.css'
+import 'primereact/resources/themes/lara-dark-indigo/theme.css'
 import 'primereact/resources/primereact.min.css'
 
 const inter = Inter({ subsets: ['latin'] })

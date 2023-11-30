@@ -6,6 +6,8 @@ import { Dialog } from 'primereact/dialog';
 import { ScrollPanel } from 'primereact/scrollpanel';
 import { useReward } from 'react-rewards';
 import { InputSwitch } from 'primereact/inputswitch';
+import 'primereact/resources/themes/lara-dark-indigo/theme.css'
+import 'primereact/resources/primereact.min.css'
 
 type Props = {
 	Data: Pokemon[]
@@ -183,7 +185,6 @@ Can you beat my score? https://dex.lmnts.tech`;
 					<p className="text-4xl text-center flex-1 pb-6 lg:pb-0 lg:text-left md:text-5xl">What Pokémon is Dex #{dexNumber}?</p>
 					<AutoComplete ref={inputRef} inputClassName="text-2xl md:text-3xl" size={20} value={guess} suggestions={filteredPokemon} completeMethod={searchPokemon} onChange={(e) => setGuess(e.value)} onKeyUp={(e) => { if (e.code === "Enter") { guessPokemon(); } }} dropdown />
 				</div>
-				{getPokemon()}
 				<div className="flex flex-col space-y-4">
 					<span id="rewardId" className="self-center z-20" />
 					<Button label="Guess" onClick={() => guessPokemon()} className="w-full text-3xl" />
