@@ -1,6 +1,8 @@
 import Papa from 'papaparse';
 import { promises as fs } from 'fs';
 import DexChallenge from './dexChallenge';
+import Head from 'next/head';
+import 'primereact/resources/themes/lara-dark-indigo/theme.css';
 
 type Pokemon = {
 	Nat: number,
@@ -32,8 +34,13 @@ export default async function Home() {
 	const data = await getData() as { Nat: number, Pokemon: string }[];
 
 	return (
-		<main className="flex min-h-screen flex-col py-12 px-8 md:py-24 md:px-24">
-			<DexChallenge Data={data} />
-		</main>
+		<>
+			<Head>
+				<link href="primereact/resources/themes/lara-dark-indigo/theme.css" rel="stylesheet" />
+			</Head>
+			<main className="flex min-h-screen flex-col py-12 px-8 md:py-24 md:px-24">
+				<DexChallenge Data={data} />
+			</main>
+		</>
 	)
 }
