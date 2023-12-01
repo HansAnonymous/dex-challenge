@@ -3,6 +3,7 @@ import { promises as fs } from 'fs';
 import DexChallenge from './dexChallenge';
 import Head from 'next/head';
 import 'primereact/resources/themes/lara-dark-indigo/theme.css';
+import Link from 'next/link';
 
 type Pokemon = {
 	Nat: number,
@@ -34,13 +35,9 @@ export default async function Home() {
 	const data = await getData() as { Nat: number, Pokemon: string }[];
 
 	return (
-		<>
-			<Head>
-				<link href="primereact/resources/themes/lara-dark-indigo/theme.css" rel="stylesheet" />
-			</Head>
-			<main className="flex min-h-screen flex-col py-12 px-8 md:py-24 md:px-24">
-				<DexChallenge Data={data} />
-			</main>
-		</>
+		<main className="flex h-screen max-w-screen-lg mx-auto flex-col pt-12 px-8 md:pt-24 md:px-24">
+			<DexChallenge Data={data} />
+			<p className="w-full text-center mt-12 sm:mt-24 mb-6">Made with 💖 by <Link className="text-blue-300" href="https://github.com/HansAnonymous">HansAnonymous</Link></p>
+		</main>
 	)
 }

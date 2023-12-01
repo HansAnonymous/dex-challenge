@@ -123,26 +123,26 @@ Can you beat my score? https://dex.lmnts.tech`;
 	}
 
 	return (
-		<>
+		<div className="game flex flex-col h-full">
 			{/* Wrong Guess */}
-			<Dialog header="Wrong Guess!" visible={dWrongGuess} style={{ width: '50vw', maxWidth: '50rem' }} draggable={false} closable={false} onHide={() => setDWrongGuess(false)}>
-				<p className="text-2xl">You guessed {guess}.</p>
-				<p className="text-2xl">You have {lives} lives left.</p>
+			<Dialog header="Wrong Guess!" visible={dWrongGuess} className="w-3/4 sm:w-1/2 max-w-md" draggable={false} closable={false} onHide={() => setDWrongGuess(false)}>
+				<p className="text-xl">You guessed {guess}.</p>
+				<p className="text-xl">You have {lives} lives left.</p>
 				<div className="mt-6 flex flex-row justify-center space-x-4">
-					<Button className="w-1/2" label={"Skip (" + skips + " skips left)"} onClick={() => { setDWrongGuess(false); setSkips(skips - 1); setDSkip(true); }} disabled={skips === 0} />
+					<Button className="w-1/2" label={"Skip (" + skips + " skips left)"} severity="danger" onClick={() => { setDWrongGuess(false); setSkips(skips - 1); setDSkip(true); }} disabled={skips === 0} />
 					<Button className="w-1/2" label="Try Again" onClick={() => setDWrongGuess(false)} />
 				</div>
 			</Dialog>
 			{/* Skip */}
-			<Dialog header="Pokémon Skipped" visible={dSkip} style={{ width: '50vw', maxWidth: '50rem' }} draggable={false} closable={false} onHide={() => setSkips(skips - 1)}>
-				<p className="text-2xl">The correct answer for Dex #{dexNumber} was {getPokemon()}.</p>
-				<p className="text-2xl">You have {skips} skips left.</p>
+			<Dialog header="Pokémon Skipped" visible={dSkip} className="w-3/4 sm:w-1/2 max-w-lg" draggable={false} closable={false} onHide={() => setSkips(skips - 1)}>
+				<p className="text-xl">The correct answer for Dex #{dexNumber} was {getPokemon()}.</p>
+				<p className="text-xl">You have {skips} skips left.</p>
 				<div className="mt-6 flex flex-row justify-center">
 					<Button className="w-1/2" label="Continue" onClick={() => { skip(); }} />
 				</div>
 			</Dialog>
 			{/* Game Over */}
-			<Dialog header="Game Over" visible={dGameOver} style={{ width: '50vw', maxWidth: '50rem' }} draggable={false} closable={false} onHide={() => reset()}>
+			<Dialog header="Game Over :(" visible={dGameOver} className="w-3/4 sm:w-1/2 max-w-lg" draggable={false} closable={false} onHide={() => reset()}>
 				<p className="text-xl sm:text-2xl">
 					Final score: {score}
 				</p>
@@ -167,7 +167,7 @@ Can you beat my score? https://dex.lmnts.tech`;
 					</ul>
 				</ScrollPanel>
 				<div className="mt-3 flex flex-row space-x-2 justify-center">
-					<Button className="text-2xl p-2" label="📋" severity="info" outlined onClick={() => copyScore()} />
+					<Button className="text-2xl p-2" label="📋" severity="info" onClick={() => copyScore()} />
 					<Button className="w-1/3" label="Play Again" onClick={() => reset()} />
 				</div>
 			</Dialog>
@@ -189,20 +189,18 @@ Can you beat my score? https://dex.lmnts.tech`;
 				<div className="flex flex-col items-center lg:flex-row">
 					<p className="text-4xl text-center flex-1 pb-6 lg:pb-0 lg:text-left md:text-5xl">What Pokémon is Dex #{dexNumber}?</p>
 					<div className="">
-						<AutoComplete ref={inputRef} inputClassName="text-2xl md:text-3xl border border-blue-500" size={20} value={guess} suggestions={filteredPokemon} completeMethod={searchPokemon} onChange={(e) => setGuess(e.value)} onSelect={(e) => { setGuess(e.value); }} onKeyUp={(e) => { if (e.code === "Enter") { guessPokemon(); } }} dropdown />
+						<AutoComplete ref={inputRef} inputClassName="text-2xl md:text-3xl" size={20} value={guess} suggestions={filteredPokemon} completeMethod={searchPokemon} onChange={(e) => setGuess(e.value)} onSelect={(e) => { setGuess(e.value); }} onKeyUp={(e) => { if (e.code === "Enter") { guessPokemon(); } }} dropdown />
 						<p className="text-md text-right md:text-lg text-red-600">{message}</p>
 					</div>
 				</div>
 				<div className="flex flex-col space-y-4">
 					<span id="rewardId" className="self-center z-20" />
 					<div className="flex flex-row justify-center space-x-4">
-						{/* <button onClick={guessPokemon} className="w-1/2 text-3xl border border-blue-400 bg-blue-400 text-black font-bold py-2 rounded">Guess</button> */}
-						<Button label="Guess" onClick={guessPokemon} className="w-full md:w-1/2 text-3xl border bg-blue-400 text-black py-2" />
-						{/* <button onClick={() => { setSkips(skips - 1); setDSkip(true); }} className="w-1/2 text-3xl border border-blue-400 bg-blue-400 text-black font-bold py-2 rounded" disabled={skips === 0}>Skip</button> */}
-						<Button label="Skip" severity="danger" onClick={() => { setSkips(skips - 1); setDSkip(true); }} className="w-full md:w-1/2 text-3xl border bg-blue-400 text-black py-2" disabled={skips === 0} />
+						<Button label="Skip" severity="danger" onClick={() => { setSkips(skips - 1); setDSkip(true); }} className="w-full md:w-1/2 text-3xl" disabled={skips === 0} />
+						<Button label="Guess" onClick={guessPokemon} className="w-full md:w-1/2 text-3xl" />
 					</div>
 				</div>
 			</div>
-		</>
+		</div>
 	)
 }
