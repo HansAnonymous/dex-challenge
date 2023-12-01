@@ -60,6 +60,10 @@ export default function DexChallenge(data: Props) {
 		return data.Data.filter((item) => item.Nat === dexNumber)[0]?.Pokemon;
 	}
 
+	const getDexNumber = () => {
+		return data.Data.filter((item) => item.Pokemon.toLowerCase() === guess.toLowerCase())[0]?.Nat;
+	}
+
 	const guessPokemon = () => {
 		const currentPokemon = getPokemon();
 		console.log("Guessing:", guess);
@@ -126,7 +130,7 @@ Can you beat my score? https://dex.lmnts.tech`;
 		<div className="game flex flex-col h-full">
 			{/* Wrong Guess */}
 			<Dialog header="Wrong Guess!" visible={dWrongGuess} className="w-3/4 sm:w-1/2 max-w-md" draggable={false} closable={false} onHide={() => setDWrongGuess(false)}>
-				<p className="text-xl">You guessed {guess}.</p>
+				<p className="text-xl">The Dex Number for {guess} is #{getDexNumber()}.</p>
 				<p className="text-xl">You have {lives} lives left.</p>
 				<div className="mt-6 flex flex-row justify-center space-x-4">
 					<Button className="w-1/2" label={"Skip (" + skips + " skips left)"} severity="danger" onClick={() => { setDWrongGuess(false); setSkips(skips - 1); setDSkip(true); }} disabled={skips === 0} />
