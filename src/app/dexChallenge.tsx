@@ -25,6 +25,7 @@ export default function DexChallenge(data: Props) {
 	const [lives, setLives] = useState(5);
 	const maxSkips = 5;
 	const [skips, setSkips] = useState(maxSkips);
+	const [gameOver, setGameOver] = useState(false);
 
 	const [message, setMessage] = useState("");
 	const [confettiEnabled, setConfettiEnabled] = useState(true);
@@ -92,7 +93,8 @@ export default function DexChallenge(data: Props) {
 			inputRef.current.hide();
 			setLives(lives - 1);
 			if (lives === 1) {
-				setDGameOver(true);
+				setGameOver(true);
+				setDWrongGuess(true)
 			} else {
 				setDWrongGuess(true);
 			}
@@ -133,8 +135,9 @@ Can you beat my score? https://dex.lmnts.tech`;
 				<p className="text-xl">The Dex Number for {guess} is #{getDexNumber()}.</p>
 				<p className="text-xl">You have {lives} lives left.</p>
 				<div className="mt-6 flex flex-row justify-center space-x-4">
-					<Button className="w-1/2" label={"Skip (" + skips + " skips left)"} severity="danger" onClick={() => { setDWrongGuess(false); setSkips(skips - 1); setDSkip(true); }} disabled={skips === 0} />
-					<Button className="w-1/2" label="Try Again" onClick={() => setDWrongGuess(false)} />
+					{gameOver && <Button className="w-1/2" label="Game Over" onClick={() => setDGameOver(true)} />}
+					{!gameOver && <Button className="w-1/2" label={"Skip (" + skips + " skips left)"} severity="danger" onClick={() => { setDWrongGuess(false); setSkips(skips - 1); setDSkip(true); }} disabled={skips === 0} />}
+					{!gameOver && <Button className="w-1/2" label="Try Again" onClick={() => setDWrongGuess(false)} />}
 				</div>
 			</Dialog>
 			{/* Skip */}
