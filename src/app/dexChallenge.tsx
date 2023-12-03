@@ -111,6 +111,7 @@ export default function DexChallenge(data: Props) {
 
 	const reset = () => {
 		setDGameOver(false);
+		setGameOver(false);
 		setDWrongGuess(false);
 		setDSkip(false);
 		setGuess("");
